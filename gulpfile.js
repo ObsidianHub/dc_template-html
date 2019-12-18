@@ -23,3 +23,20 @@ gulp.task('browser-sync', function() {
 	})
 });
 function bsReload(done) { browserSync.reload(); done(); };
+
+// Custom Styles
+gulp.task('styles', function() {
+	return gulp.src('app/scss/**/*.scss')
+	.pipe(sass({
+		outputStyle: 'expanded',
+		includePaths: [__dirname + '/node_modules']
+	}))
+	.pipe(concat('styles.min.css'))
+	.pipe(autoprefixer({
+		grid: true,
+		overrideBrowserslist: ['last 10 versions']
+	}))
+	.pipe(cleancss( {level: { 1: { specialComments: 0 } } })) // Optional. Comment out when debugging
+	.pipe(gulp.dest('app/css'))
+	.pipe(browserSync.stream())
+});
