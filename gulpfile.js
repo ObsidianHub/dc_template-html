@@ -11,3 +11,15 @@ let gulp         = require('gulp'),
 	responsive   = require('gulp-responsive'),
     del          = require('del');
     
+// Local Server
+gulp.task('browser-sync', function() {
+	browserSync({
+		server: {
+			baseDir: 'app'
+		},
+		notify: false,
+		// online: false, // Work offline without internet connection
+		// tunnel: true, tunnel: 'projectname', // Demonstration page: http://projectname.localtunnel.me
+	})
+});
+function bsReload(done) { browserSync.reload(); done(); };
