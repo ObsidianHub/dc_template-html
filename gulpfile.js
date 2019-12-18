@@ -83,3 +83,19 @@ gulp.task('img', gulp.series('img-responsive-1x', 'img-responsive-2x', bsReload)
 gulp.task('cleanimg', function() {
 	return del(['app/img/@*'], { force: true })
 });
+
+// Deploy
+gulp.task('rsync', function() {
+	return gulp.src('app/')
+	.pipe(rsync({
+		root: 'app/',
+		hostname: 'username@yousite.com',
+		destination: 'yousite/public_html/',
+		// include: ['*.htaccess'], // Included files
+		exclude: ['**/Thumbs.db', '**/*.DS_Store'], // Excluded files
+		recursive: true,
+		archive: true,
+		silent: false,
+		compress: true
+	}))
+});
