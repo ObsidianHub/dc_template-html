@@ -99,3 +99,18 @@ gulp.task('rsync', function() {
 		compress: true
 	}))
 });
+
+// Code & Reload
+gulp.task('code', function() {
+	return gulp.src('app/**/*.html')
+	.pipe(browserSync.reload({ stream: true }))
+});
+
+gulp.task('watch', function() {
+	gulp.watch('app/scss/**/*.scss', gulp.parallel('styles'));
+	gulp.watch(['app/js/_custom.js', 'app/js/_libs.js'], gulp.parallel('scripts'));
+	gulp.watch('app/*.html', gulp.parallel('code'));
+	gulp.watch('app/img/_src/**/*', gulp.parallel('img'));
+});
+
+gulp.task('default', gulp.parallel('img', 'styles', 'scripts', 'browser-sync', 'watch'));
